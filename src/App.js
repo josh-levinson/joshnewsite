@@ -33,6 +33,14 @@ function NoShowsScheduled(props) {
 }
 
 function ShowList(props) {
+
+  function ShowButton(props) {
+    return (
+      <button onClick={props.click}>
+        Show
+      </button>
+    );
+  }
   const showsExist = props.showsExist;
   if (showsExist)
   {
@@ -43,6 +51,57 @@ function ShowList(props) {
   }
 }
 
+class ShowControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleShowClick = this.handleShowClick.bind(this);
+    this.handleHideClick = this.handleHideClick.bind(this);
+    this.state = { showsVisible: true };
+  }
+
+  handleShowClick() {
+    this.setState({showsVisible: true });
+  }
+
+  handleHideClick() {
+    this.setState({showsVisible: false });
+  }
+
+  render() {
+    const showsVisible = this.state.showsVisible; 
+    let button;
+
+    if (showsVisible) {
+      button = <HideButton onClick={this.handleHideClick} />;
+    } else {
+      button = <ShowButton onClick={this.handleShowClick} />;
+    }
+
+    return (
+      <div>
+        <ShowList showsExist={showsVisible} />
+        {button}
+      </div>
+    );
+  }
+}
+
+function HideButton(props) {
+  return (
+    <button onClick={props.click}>
+      Hide
+    </button>
+  );
+}
+
+function ShowButton(props) {
+  return (
+    <button onClick={props.click}>
+      Show
+    </button>
+  );
+}
+
 function App() {
   return (
     <div className="App">
@@ -50,7 +109,7 @@ function App() {
         <Greeting name="Josh Levinson" />
       </header>
       <div>
-        <ShowList showsExist={false} />
+        <ShowControl />
       </div>
     </div>
   );
