@@ -26,33 +26,20 @@ function ComedyShow(props) {
   );
 }
 
-class Clock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {date: new Date()};
-  }
+function NoShowsScheduled(props) {
+  return (
+    <div>No shows currently scheduled.</div>
+  );
+}
 
-  componentDidMount() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
+function ShowList(props) {
+  const showsExist = props.showsExist;
+  if (showsExist)
+  {
+  return <ComedyShow title="Josh's Comedy Show" startTime="8:00pm" showPrice="$8.00" />;
   }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
-  tick() {
-    this.setState({
-      date: new Date()
-    });
-  }
-
-  render() {
-    return (
-      <h3>It is {this.state.date.toLocaleTimeString()}.</h3>
-    );
+  else {
+    return <NoShowsScheduled />
   }
 }
 
@@ -62,9 +49,8 @@ function App() {
       <header className="App-header">
         <Greeting name="Josh Levinson" />
       </header>
-      <Clock />
       <div>
-        <ComedyShow title="Josh's Comedy Show" startTime="8:00pm" showPrice="$8.00" />
+        <ShowList showsExist={false} />
       </div>
     </div>
   );
